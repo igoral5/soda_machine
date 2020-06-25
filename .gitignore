@@ -5,4 +5,5 @@
 /simulation/
 /soda_machine.qws
 /soda_machine_nativelink_simulation.rpt
- 
+*.bak
+
