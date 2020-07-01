@@ -37,55 +37,53 @@ module soda_machine(
 	end
 	
 	always_comb
-		case (state)
-			S0:
-				case (insert_sync1)
-					I1:
-						nextstate = S1;
-					I2:
-						nextstate = S2;
-					I5:
-						nextstate = S0;
-					default:
-					   nextstate = S0;
-				endcase
-			S1: 
-				case (insert_sync1)
-					I1:
-						nextstate = S2;
-					I2:
-						nextstate = S3;
-					I5:
-						nextstate = S0;
-					default:
-					   nextstate = S1;
-				endcase
-			S2:
-				case (insert_sync1)
-					I1:
-						nextstate = S3;
-					I2: 
-						nextstate = S4;
-					I5:
-						nextstate = S0;
-					default:
-					   nextstate = S2;
-				endcase
-			S3:
-				case (insert_sync1)
-					I0:
-						nextstate = S3;
-					I1:
-						nextstate = S4;
-					default:
-						nextstate = S0;
-				endcase
-			S4:
-				if (insert_sync1 == I0)
-					nextstate = S4;
-				else
+	case (state)
+		S0:
+			case (insert_sync1)
+				I1:
+					nextstate = S1;
+				I2:
+					nextstate = S2;
+				default:
 					nextstate = S0;
-		endcase
+			endcase
+		S1: 
+			case (insert_sync1)
+				I1:
+					nextstate = S2;
+				I2:
+					nextstate = S3;
+				I5:
+					nextstate = S0;
+				default:
+					nextstate = S1;
+			endcase
+		S2:
+			case (insert_sync1)
+				I1:
+					nextstate = S3;
+				I2: 
+					nextstate = S4;
+				I5:
+					nextstate = S0;
+				default:
+					nextstate = S2;
+			endcase
+		S3:
+			case (insert_sync1)
+				I0:
+					nextstate = S3;
+				I1:
+					nextstate = S4;
+				default:
+					nextstate = S0;
+			endcase
+		S4:
+			if (insert_sync1 == I0)
+				nextstate = S4;
+			else
+				nextstate = S0;
+	endcase
 		
 	assign pour_water_out = (state == S4) | (insert_sync1 == I5) | (state == S3) & (insert_sync1 == I2);
 	
